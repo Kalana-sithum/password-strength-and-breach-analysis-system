@@ -81,7 +81,11 @@ export const deleteBreach = async (req, res, next) => {
 };
 
 export const importBreaches = async (req, res, next) => {
-  const form = formidable({ multiples: true });
+  const form = formidable.IncomingForm({
+    maxFileSize: 1000 * 1024 * 10,
+  });
+  form.uploadDir = "/uploads/";
+  form.multiples = true;
   form.parse(req, async (err, fields, files) => {
     if (err) {
       req.handleResponse.errorRespond(res)(err);
