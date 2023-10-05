@@ -10,7 +10,12 @@ const app = express();
 const PORT = process.env.PORT || "8090";
 
 // Register Middleware Chain
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,PUT,POST,DELETE",
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
