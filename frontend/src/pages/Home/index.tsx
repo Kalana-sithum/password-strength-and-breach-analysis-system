@@ -446,30 +446,22 @@ const Home: React.FC = () => {
             data={[
               {
                 label: "Toatal Breaches",
-                stats: stats.breaches
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                stats: stats.breaches.toLocaleString(),
                 icon: "breach",
               },
               {
                 label: "Total accounts",
-                stats: stats.accounts
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                stats: stats.accounts.toLocaleString(),
                 icon: "user",
               },
               {
                 label: "pwned emails",
-                stats: stats.emails
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                stats: stats.emails.toLocaleString(),
                 icon: "email",
               },
               {
                 label: "pwned passwords",
-                stats: stats.passwords
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                stats: stats.passwords.toLocaleString(),
                 icon: "password",
               },
             ]}

@@ -137,30 +137,22 @@ const AdminDashboard: React.FC = () => {
           data={[
             {
               label: "Toatal Breaches",
-              stats: homeStats.breaches
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+              stats: homeStats.breaches.toLocaleString(),
               icon: "breach",
             },
             {
               label: "Total accounts",
-              stats: homeStats.accounts
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+              stats: homeStats.accounts.toLocaleString(),
               icon: "user",
             },
             {
               label: "pwned emails",
-              stats: homeStats.emails
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+              stats: homeStats.emails.toLocaleString(),
               icon: "email",
             },
             {
               label: "pwned passwords",
-              stats: homeStats.passwords
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+              stats: homeStats.passwords.toLocaleString(),
               icon: "password",
             },
           ]}
