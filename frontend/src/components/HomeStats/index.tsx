@@ -1,12 +1,4 @@
-import {
-  RingProgress,
-  Text,
-  SimpleGrid,
-  Paper,
-  Center,
-  Group,
-  useMantineTheme,
-} from "@mantine/core";
+import { Text, SimpleGrid, Paper, Group, useMantineTheme } from "@mantine/core";
 import {
   IconMail,
   IconLockOpenOff,

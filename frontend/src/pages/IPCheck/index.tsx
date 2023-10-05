@@ -7,7 +7,6 @@ import {
   Flex,
   Loader,
   Card,
-  Image,
   createStyles,
   Container,
   Button,
@@ -19,12 +18,9 @@ import {
   IconAlertCircle,
   IconAlertTriangle,
   IconCheck,
-  IconDots,
   IconSearch,
 } from "@tabler/icons";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import BreachAPI from "../../api/BreachAPI";
 import { UserHeaderMenu, Hero } from "../../components";
 import { Dots } from "./Dots";
 import IP_BACKGROUND from "../../assets/ip-background.png";
