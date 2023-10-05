@@ -6,19 +6,32 @@ import reportWebVitals from "./reportWebVitals";
 import { NotificationsProvider } from "@mantine/notifications";
 import { ModalsProvider } from "@mantine/modals";
 import { MantineProvider } from "@mantine/core";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+
 root.render(
   <React.StrictMode>
-    <MantineProvider>
-      <ModalsProvider>
-        <NotificationsProvider zIndex={2077}>
-          <App />
-        </NotificationsProvider>
-      </ModalsProvider>
-    </MantineProvider>
+    <Auth0Provider
+      domain={domain!}
+      clientId={clientId!}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+      }}
+    >
+      <MantineProvider>
+        <ModalsProvider>
+          <NotificationsProvider zIndex={2077}>
+            <App />
+          </NotificationsProvider>
+        </ModalsProvider>
+      </MantineProvider>
+    </Auth0Provider>
   </React.StrictMode>
 );
 

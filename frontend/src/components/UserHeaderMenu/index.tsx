@@ -28,6 +28,7 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification, updateNotification } from "@mantine/notifications";
 import UserAPI from "../../api/UserAPI";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const HEADER_HEIGHT = 60;
 
@@ -110,6 +111,8 @@ interface UserHeaderMenuProps {
 }
 
 const UserHeaderMenu: React.FC<UserHeaderMenuProps> = ({ noHero }) => {
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+
   const useStyles = createStyles((theme) => ({
     root: {
       width: "100%",
@@ -182,8 +185,6 @@ const UserHeaderMenu: React.FC<UserHeaderMenuProps> = ({ noHero }) => {
   const [opened, { toggle, close }] = useDisclosure(false);
   const { classes, cx } = useStyles();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
-
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const items = links.map((link) => (
     <CustomLink
@@ -264,7 +265,7 @@ const UserHeaderMenu: React.FC<UserHeaderMenuProps> = ({ noHero }) => {
           {items}
         </Group>
         <Group>
-          {(user && user.firstName && (
+          {(isAuthenticated && (
             <Menu
               width={260}
               position="bottom-end"
@@ -280,13 +281,13 @@ const UserHeaderMenu: React.FC<UserHeaderMenuProps> = ({ noHero }) => {
                 >
                   <Group spacing={7}>
                     <Avatar
-                      src={DEFAULTPROFILE}
-                      alt={user.name}
+                      src={user?.picture || DEFAULTPROFILE}
+                      alt={user?.name}
                       radius="xl"
                       size={20}
                     />
                     <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3}>
-                      {user.firstName + " " + user.lastName}
+                      {user?.name}
                     </Text>
                     <IconChevronDown size={12} stroke={1.5} />
                   </Group>
@@ -302,14 +303,12 @@ const UserHeaderMenu: React.FC<UserHeaderMenuProps> = ({ noHero }) => {
                     Account settings
                   </Menu.Item>
                 </Link>
-                <Link
-                  to="/logout"
-                  style={{ color: "inherit", textDecoration: "none" }}
+                <Menu.Item
+                  icon={<IconLogout size={14} stroke={1.5} />}
+                  onClick={() => logout()}
                 >
-                  <Menu.Item icon={<IconLogout size={14} stroke={1.5} />}>
-                    Logout
-                  </Menu.Item>
-                </Link>
+                  Logout
+                </Menu.Item>
 
                 <Menu.Divider />
 
@@ -330,12 +329,7 @@ const UserHeaderMenu: React.FC<UserHeaderMenuProps> = ({ noHero }) => {
             </Menu>
           )) || (
             <Group className={classes.hiddenMobile}>
-              <Link to="/login">
-                <Button variant="default">Log in</Button>
-              </Link>
-              <Link to="/signup">
-                <Button>Sign up</Button>
-              </Link>
+              <Button onClick={() => loginWithRedirect()}>Sign in</Button>
             </Group>
           )}
           <Burger
@@ -349,14 +343,9 @@ const UserHeaderMenu: React.FC<UserHeaderMenuProps> = ({ noHero }) => {
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
               {items}
-              {!(user && user.firstName) && (
+              {!isAuthenticated && (
                 <Group position="center" grow pb="xl" px="md">
-                  <Link to="/login">
-                    <Button variant="default">Log in</Button>
-                  </Link>
-                  <Link to="/signup">
-                    <Button>Sign up</Button>
-                  </Link>
+                  <Button onClick={() => loginWithRedirect()}>Sign in</Button>
                 </Group>
               )}
             </Paper>
