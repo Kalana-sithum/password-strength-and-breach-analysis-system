@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import logger from "./utils/logger";
+import helmet from "helmet";
 import "dotenv/config";
 import routes from "./api/routes";
 import responseHandler from "./utils/response.handler";
@@ -18,6 +19,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
 
 // Inject Response Handler
 app.use((req, res, next) => {

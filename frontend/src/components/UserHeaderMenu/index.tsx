@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createStyles,
   Header,
@@ -111,7 +111,7 @@ interface UserHeaderMenuProps {
 }
 
 const UserHeaderMenu: React.FC<UserHeaderMenuProps> = ({ noHero }) => {
-  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+  const { loginWithPopup, logout, isAuthenticated, user } = useAuth0();
 
   const useStyles = createStyles((theme) => ({
     root: {
@@ -253,6 +253,10 @@ const UserHeaderMenu: React.FC<UserHeaderMenuProps> = ({ noHero }) => {
       },
     });
 
+  useEffect(() => {
+    console.log("user", user);
+  }, [user]);
+
   return (
     <Header
       height={HEADER_HEIGHT}
@@ -329,7 +333,7 @@ const UserHeaderMenu: React.FC<UserHeaderMenuProps> = ({ noHero }) => {
             </Menu>
           )) || (
             <Group className={classes.hiddenMobile}>
-              <Button onClick={() => loginWithRedirect()}>Sign in</Button>
+              <Button onClick={() => loginWithPopup()}>Sign in</Button>
             </Group>
           )}
           <Burger
@@ -345,7 +349,7 @@ const UserHeaderMenu: React.FC<UserHeaderMenuProps> = ({ noHero }) => {
               {items}
               {!isAuthenticated && (
                 <Group position="center" grow pb="xl" px="md">
-                  <Button onClick={() => loginWithRedirect()}>Sign in</Button>
+                  <Button onClick={() => loginWithPopup()}>Sign in</Button>
                 </Group>
               )}
             </Paper>
